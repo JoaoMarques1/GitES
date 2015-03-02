@@ -1,0 +1,78 @@
+package pt.tecnico.bubbledocs.domain;
+
+class User{
+	String userName;		#Identificar único;
+	String name;			
+	String passWord;		
+}
+
+class Document{
+	Integer docId;			#Identificar único;
+	String name;
+}
+
+class FolhaCalculo;
+
+class Cell{
+	Integer row;
+	Integer collum;
+}
+
+class Content{
+	Integer literal;
+	Integer function;
+	Cell ref;
+}
+
+class Interval;
+
+
+
+#Um utilizador pode ter acesso a 0 ou mais documentos;
+relation UserContainsDocuments{
+	User playsRole user;
+	Document playsRole document{
+		multiplicity *;
+	}
+}
+
+#Um documento só é criado por um utilizador;
+relation DocumentContainsUsers{
+	Document playsRole document;
+	User playsRole user{
+		multiplicity 1;
+	}
+}
+
+
+#Um documento é do tipo FolhaCalculo;
+relation DocumentContainsFolhaCalculos{
+	Document playsRole document;
+	FolhaCalculo playsRole folhacalculo{
+		multiplicity 1;
+	}
+}
+
+#Uma FolhaCalculo contém 1 ou mais celulas;
+relation FolhaCalculoContaintsCells{
+	FolhaCalculo playsRole folhacalculo;
+	Cell playsRole cell{
+		multiplicity 1..*;
+	}
+}
+
+#Um intevalo é composto por duas celulas;
+relation IntervalContaintsCells{
+	Interval playsRole interval;
+	Cell playsRole cell{
+		multiplicity 2;
+	}
+}
+
+#Uma celula é composta por contents;
+relation CellContainsContents{
+	Cell playsRole cell;
+	Content playsRole content{
+		multiplicity *;
+	}
+}
